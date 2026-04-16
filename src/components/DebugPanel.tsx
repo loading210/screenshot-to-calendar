@@ -22,36 +22,32 @@ export function DebugPanel({ debug }: Props) {
     : debug.rawResponse;
 
   return (
-    <div className="mt-6 rounded-[10px] border border-bg-border overflow-hidden">
+    <div className="mt-6 rounded-lg border border-bg-border bg-white shadow-card overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between px-4 py-2.5 bg-bg-surface hover:bg-bg-elevated transition-colors duration-150"
+        className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-bg-elevated transition-colors duration-150 cursor-pointer"
       >
-        <span className="text-xs font-mono text-text-tertiary">debug</span>
+        <span className="text-xs font-mono text-text-tertiary tracking-wide">debug</span>
         <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
+          width="12" height="12" viewBox="0 0 12 12" fill="none"
           className={`text-text-tertiary transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
         >
-          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </button>
 
       {open && (
         <div className="border-t border-bg-border">
-          {/* Tabs */}
-          <div className="flex border-b border-bg-border">
+          <div className="flex border-b border-bg-border bg-bg-elevated">
             {tabs.map((t) => (
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={[
-                  'px-4 py-2 text-xs font-mono transition-colors duration-150',
+                  'px-4 py-2 text-xs font-mono transition-colors duration-150 cursor-pointer',
                   tab === t.id
-                    ? 'text-text-primary border-b border-accent -mb-px bg-bg-surface'
-                    : 'text-text-tertiary hover:text-text-secondary',
+                    ? 'text-accent border-b-2 border-accent -mb-px bg-white font-medium'
+                    : 'text-text-secondary hover:text-text-primary',
                 ].join(' ')}
               >
                 {t.label}
@@ -59,7 +55,6 @@ export function DebugPanel({ debug }: Props) {
             ))}
           </div>
 
-          {/* Content */}
           <pre className="p-4 text-xs font-mono text-text-secondary bg-bg-base overflow-x-auto whitespace-pre-wrap break-words max-h-72 overflow-y-auto leading-relaxed">
             {content || <span className="text-text-tertiary italic">empty</span>}
           </pre>

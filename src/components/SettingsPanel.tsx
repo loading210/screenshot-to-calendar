@@ -12,13 +12,11 @@ export function SettingsPanel({ settings, onSave }: Props) {
   const [model, setModel] = useState(settings.model);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Sync local state when settings change externally
   useEffect(() => {
     setUrl(settings.ollamaUrl);
     setModel(settings.model);
   }, [settings]);
 
-  // Close on click outside
   useEffect(() => {
     if (!open) return;
     function handler(e: MouseEvent) {
@@ -42,68 +40,67 @@ export function SettingsPanel({ settings, onSave }: Props) {
 
   return (
     <div className="relative" ref={panelRef}>
-      {/* Gear button */}
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Settings"
+        title="Ollama settings"
         className={[
-          'flex items-center justify-center w-8 h-8 rounded-[8px] border transition-colors duration-150',
+          'flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150 cursor-pointer',
           open
-            ? 'border-accent text-accent bg-accent-dim'
-            : 'border-bg-border text-text-tertiary hover:text-text-secondary hover:border-text-tertiary',
+            ? 'bg-accent-dim text-accent'
+            : 'text-text-secondary hover:bg-bg-elevated hover:text-text-primary',
         ].join(' ')}
       >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M1 4h12M1 10h12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-          <circle cx="4.5" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.2" fill="#0A0A0B"/>
-          <circle cx="9.5" cy="10" r="1.5" stroke="currentColor" strokeWidth="1.2" fill="#0A0A0B"/>
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+          <path d="M10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
         </svg>
       </button>
 
-      {/* Popover */}
       {open && (
-        <div className="absolute right-0 top-10 z-50 w-72 rounded-[10px] border border-bg-border bg-bg-surface shadow-lg p-4 flex flex-col gap-3">
-          <p className="text-xs font-mono text-text-tertiary mb-1">Ollama settings</p>
+        <div className="absolute right-0 top-11 z-50 w-76 rounded-lg border border-bg-border bg-white shadow-popover p-4 flex flex-col gap-3 min-w-[300px]">
+          <div className="flex items-center gap-2 mb-1">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" className="text-accent">
+              <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M10 1v2M10 17v2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M1 10h2M17 10h2M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <p className="text-sm font-medium text-text-primary">Ollama settings</p>
+          </div>
 
-          {/* URL */}
           <div className="flex flex-col gap-1">
-            <label className="text-xs text-text-secondary font-sans">Base URL</label>
+            <label className="text-xs font-medium text-text-secondary">Base URL</label>
             <input
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               spellCheck={false}
-              className="bg-bg-elevated border border-bg-border rounded-[6px] px-3 py-1.5 text-xs font-mono text-text-primary focus:outline-none focus:border-accent transition-colors duration-150"
+              className="bg-white border border-bg-border rounded px-3 py-2 text-sm font-mono text-text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-150"
             />
           </div>
 
-          {/* Model */}
           <div className="flex flex-col gap-1">
-            <label className="text-xs text-text-secondary font-sans">Model</label>
+            <label className="text-xs font-medium text-text-secondary">Model</label>
             <input
               type="text"
               value={model}
               onChange={(e) => setModel(e.target.value)}
               spellCheck={false}
-              className="bg-bg-elevated border border-bg-border rounded-[6px] px-3 py-1.5 text-xs font-mono text-text-primary focus:outline-none focus:border-accent transition-colors duration-150"
+              className="bg-white border border-bg-border rounded px-3 py-2 text-sm font-mono text-text-primary focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 transition-all duration-150"
             />
           </div>
 
-          {/* Mixed-content warning */}
           {isMixedContent && (
-            <div className="rounded-[6px] border border-danger/30 bg-danger-dim px-3 py-2">
-              <p className="text-xs text-danger font-sans leading-relaxed">
-                This page is on HTTPS but your Ollama URL is HTTP. Browsers will block the request.
-                Expose Ollama over HTTPS (e.g.{' '}
-                <code className="font-mono">ngrok http 11434</code>) and update this URL.
+            <div className="rounded border border-danger/30 bg-danger-dim px-3 py-2">
+              <p className="text-xs text-danger leading-relaxed">
+                Page is on HTTPS but Ollama URL is HTTP — the browser will block it.
+                Run <code className="font-mono bg-white/60 px-1 rounded">ngrok http 11434</code> and use the HTTPS URL here.
               </p>
             </div>
           )}
 
-          {/* Save */}
           <button
             onClick={handleSave}
-            className="w-full py-1.5 rounded-[6px] bg-accent hover:bg-accent-hover text-white text-xs font-sans font-medium transition-colors duration-150"
+            className="w-full py-2 rounded-full bg-accent hover:bg-accent-hover text-white text-sm font-medium transition-colors duration-150 cursor-pointer shadow-btn hover:shadow-btn-hover"
           >
             Save
           </button>

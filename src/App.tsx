@@ -80,7 +80,7 @@ export default function App() {
   function ctaLabel() {
     if (adding) return 'Adding events…';
     if (successCount > 0 && pendingCount === 0 && errorCount === 0) {
-      return `✓ All events added`;
+      return 'All events added';
     }
     if (errorCount > 0 && pendingCount === 0) {
       return `${successCount} of ${checkedCards.length} added — retry failed`;
@@ -94,11 +94,21 @@ export default function App() {
   return (
     <div className="min-h-screen bg-bg-base font-sans">
       {/* Header */}
-      <header className="h-14 border-b border-bg-border flex items-center px-4">
+      <header className="h-14 bg-white border-b border-bg-border flex items-center px-4 sticky top-0 z-10">
         <div className="max-w-[680px] w-full mx-auto flex items-center justify-between">
-          <span className="font-mono text-sm text-text-primary tracking-tight">
-            screenshot → calendar
-          </span>
+          <div className="flex items-center gap-2.5">
+            {/* Google Calendar-style icon */}
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="flex-shrink-0">
+              <rect x="2" y="4" width="24" height="22" rx="2" fill="white" stroke="#DADCE0" strokeWidth="1.5"/>
+              <rect x="2" y="4" width="24" height="7" rx="2" fill="#1A73E8"/>
+              <rect x="2" y="9" width="24" height="2" fill="#1A73E8"/>
+              <path d="M9 1v6M19 1v6" stroke="#1A73E8" strokeWidth="1.8" strokeLinecap="round"/>
+              <text x="14" y="22" textAnchor="middle" fontSize="9" fontWeight="700" fill="#3C4043" fontFamily="Roboto,sans-serif">CAL</text>
+            </svg>
+            <span className="text-base font-medium text-text-primary tracking-tight">
+              Screenshot to Calendar
+            </span>
+          </div>
           <div className="flex items-center gap-2">
             <SettingsPanel settings={settings} onSave={saveSettings} />
             <AuthButton token={token} onLogin={login} onLogout={logout} />
@@ -120,10 +130,10 @@ export default function App() {
           disabled={!file || extractState.phase === 'loading'}
           onClick={handleExtract}
           className={[
-            'w-full py-2.5 rounded-[10px] text-sm font-sans font-medium transition-all duration-150 mb-6',
+            'w-full py-2.5 rounded-full text-sm font-medium transition-all duration-150 mb-6',
             !file || extractState.phase === 'loading'
               ? 'bg-bg-elevated text-text-tertiary cursor-not-allowed border border-bg-border'
-              : 'bg-accent hover:bg-accent-hover text-white cursor-pointer border border-transparent',
+              : 'bg-accent hover:bg-accent-hover text-white cursor-pointer shadow-btn hover:shadow-btn-hover',
           ].join(' ')}
         >
           {extractState.phase === 'loading'
@@ -151,7 +161,7 @@ export default function App() {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3 my-2">
               <div className="h-px flex-1 bg-bg-border" />
-              <span className="text-xs text-text-tertiary font-mono">
+              <span className="text-xs text-text-tertiary">
                 {extractState.phase === 'loading' && extractState.step === 'parsing'
                   ? 'Understanding events…'
                   : `Reading text…${extractState.phase === 'loading' && extractState.step === 'ocr' && extractState.progress > 0 ? ` ${extractState.progress}%` : ''}`}
@@ -179,14 +189,14 @@ export default function App() {
                 disabled={adding || (successCount > 0 && pendingCount === 0 && errorCount === 0)}
                 onClick={handleAddToCalendar}
                 className={[
-                  'mt-6 w-full py-2.5 rounded-[10px] text-sm font-sans font-medium transition-all duration-150 flex items-center justify-center gap-2',
+                  'mt-6 w-full py-2.5 rounded-full text-sm font-medium transition-all duration-150 flex items-center justify-center gap-2',
                   adding
                     ? 'bg-accent-dim text-accent border border-accent/30 cursor-not-allowed'
                     : successCount > 0 && pendingCount === 0 && errorCount === 0
                     ? 'bg-success-dim text-success border border-success/30 cursor-default'
                     : !token
-                    ? 'bg-bg-elevated border border-bg-border text-text-secondary hover:border-accent hover:text-accent cursor-pointer'
-                    : 'bg-accent hover:bg-accent-hover text-white border border-transparent cursor-pointer',
+                    ? 'bg-white border border-bg-border text-text-secondary hover:border-accent hover:text-accent cursor-pointer shadow-btn'
+                    : 'bg-accent hover:bg-accent-hover text-white shadow-btn hover:shadow-btn-hover cursor-pointer',
                 ].join(' ')}
               >
                 {adding && <span className="spinner" />}

@@ -8,9 +8,9 @@
 
 body {
   margin: 0;
-  background-color: #0A0A0B;
-  color: #F0F0F2;
-  font-family: 'Inter', sans-serif;
+  background-color: #F8F9FA;
+  color: #3C4043;
+  font-family: 'Roboto', 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,40 +19,28 @@ body {
   min-height: 100svh;
 }
 
-/* Custom input/textarea dark styling */
+/* Light-mode native date/time inputs */
 input[type="text"],
 input[type="date"],
 input[type="time"],
 textarea {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
-  cursor: pointer;
-}
-
-/* Skeleton pulse animation */
+/* Skeleton pulse */
 @keyframes skeleton-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50%       { opacity: 0.45; }
 }
 
 .skeleton {
   animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
 
-/* Event card entry animation */
+/* Card entry animation */
 @keyframes card-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .card-enter {
@@ -65,10 +53,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 }
 
 .spinner {
-  width: 12px;
-  height: 12px;
-  border: 1.5px solid #2A2A2F;
-  border-top-color: #5B6EF5;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #DADCE0;
+  border-top-color: #1A73E8;
   border-radius: 50%;
   animation: spin 600ms linear infinite;
   display: inline-block;

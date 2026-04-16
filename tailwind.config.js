@@ -5,33 +5,41 @@ export default {
     extend: {
       colors: {
         bg: {
-          base:     '#0A0A0B',
-          surface:  '#111113',
-          elevated: '#1A1A1E',
-          border:   '#2A2A2F',
+          base:     '#F8F9FA',  // Google's page background
+          surface:  '#FFFFFF',  // Cards, panels
+          elevated: '#F1F3F4',  // Hover states
+          border:   '#DADCE0',  // Borders, dividers
         },
         text: {
-          primary:   '#F0F0F2',
-          secondary: '#8A8A96',
-          tertiary:  '#55555E',
+          primary:   '#3C4043',  // Main text
+          secondary: '#70757A',  // Secondary text
+          tertiary:  '#9AA0A6',  // Placeholder, disabled
         },
         accent: {
-          DEFAULT: '#5B6EF5',
-          hover:   '#6B7EFF',
-          dim:     '#1E2154',
+          DEFAULT: '#1A73E8',   // Google Blue
+          hover:   '#1558B0',
+          dim:     '#E8F0FE',
         },
         success: {
-          DEFAULT: '#22C55E',
-          dim:     '#0D2818',
+          DEFAULT: '#34A853',   // Google Green
+          dim:     '#E6F4EA',
         },
         danger: {
-          DEFAULT: '#EF4444',
-          dim:     '#2A0F0F',
+          DEFAULT: '#EA4335',   // Google Red
+          dim:     '#FCE8E6',
         },
       },
+      boxShadow: {
+        'card':       '0 1px 2px rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)',
+        'card-hover': '0 1px 3px rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15)',
+        'btn':        '0 1px 2px rgba(60,64,67,.3)',
+        'btn-hover':  '0 1px 3px rgba(60,64,67,.4)',
+        'header':     '0 1px 3px rgba(60,64,67,.14)',
+        'popover':    '0 2px 6px 2px rgba(60,64,67,.15)',
+      },
       fontFamily: {
-        mono: ['"DM Mono"', 'monospace'],
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Roboto', 'Inter', 'sans-serif'],
+        mono: ['"Roboto Mono"', '"DM Mono"', 'monospace'],
       },
     },
   },

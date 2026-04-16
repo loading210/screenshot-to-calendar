@@ -14,7 +14,7 @@ export function EventList({ cards, onChange, onRemove }: Props) {
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-3 my-2">
         <div className="h-px flex-1 bg-bg-border" />
-        <span className="text-xs text-text-tertiary font-mono">
+        <span className="text-xs text-text-tertiary font-medium">
           {cards.length} event{cards.length !== 1 ? 's' : ''} found
         </span>
         <div className="h-px flex-1 bg-bg-border" />
